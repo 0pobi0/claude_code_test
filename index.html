@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>스탑워치</title>
+  <style>
+    :root {
+      --page-bg: #efe6d2;
+      --ink: #1a1416;
+      --paper: rgba(255, 248, 232, 0.88);
+      --paper-solid: #fff8e8;
+      --muted: #6d6152;
+      --accent: #1f5f8b;
+      --danger: #b83227;
+      --best: #1b7a3d;
+      --worst: #b3261e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --page-bg: #17130f; }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+    }
+
+    /* 카드 전체가 피카소풍 큐비즘 얼굴 위에 놓인다 */
+    .stopwatch {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 20px 18px;
+      overflow: hidden;
+      background: #d9b26f;
+      border: 4px solid var(--ink);
+      border-radius: 8px;
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+    .portrait {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .stopwatch > *:not(.portrait) { position: relative; z-index: 1; }
+
+    h1 {
+      align-self: center;
+      margin: 0;
+      padding: 4px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-indent: 0.3em;
+      background: var(--paper-solid);
+      border: 3px solid var(--ink);
+      border-radius: 4px;
+    }
+
+    .spacer { flex: 1; min-height: 240px; }
+
+    .display {
+      font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(2.2rem, 11vw, 3.2rem);
+      font-weight: 700;
+      text-align: center;
+      padding: 12px 0;
+      margin-bottom: 14px;
+      letter-spacing: 0.02em;
+      background: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: 4px;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .display .ms { color: var(--muted); font-size: 0.6em; }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    #reset { grid-column: 1 / -1; }
+
+    button {
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 12px 0;
+      border-radius: 4px;
+      border: 3px solid var(--ink);
+      background: var(--paper-solid);
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.05s, box-shadow 0.05s, opacity 0.15s;
+    }
+    button:active:not(:disabled) {
+      transform: translate(3px, 3px);
+      box-shadow: 0 0 0 var(--ink);
+    }
+    button:disabled {
+      background: #e3d9c2;
+      color: #8a7f70;
+      cursor: not-allowed;
+    }
+    button:focus-visible { outline: 3px solid #f2c14e; outline-offset: 2px; }
+
+    #toggle { background: var(--accent); color: #fff8e8; }
+    #toggle.running { background: var(--danger); }
+
+    .laps {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      max-height: 130px;
+      overflow-y: auto;
+      background: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .laps li {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr 1fr;
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(26, 20, 22, 0.25);
+      font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+      font-size: 0.9rem;
+    }
+    .laps li:last-child { border-bottom: 0; }
+    .laps li span:nth-child(1) { color: var(--muted); }
+    .laps li span:nth-child(3) { text-align: right; color: var(--muted); }
+    .laps li.best span:nth-child(2) { color: var(--best); font-weight: 700; }
+    .laps li.worst span:nth-child(2) { color: var(--worst); font-weight: 700; }
+    .laps:empty { display: none; }
+
+    .hint {
+      align-self: center;
+      margin: 14px 0 0;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+      color: var(--ink);
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+    }
+    kbd {
+      padding: 0 5px;
+      border: 1px solid var(--ink);
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <main class="stopwatch">
+    <!-- 정면과 측면이 한 얼굴에 겹쳐진 큐비즘 스타일의 초상 (직접 그린 SVG) -->
+    <svg class="portrait" viewBox="0 0 420 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"
+         stroke="#1a1416" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+      <!-- 배경 면 분할 -->
+      <rect width="420" height="700" fill="#d9b26f" stroke="none"/>
+      <polygon points="0,0 150,0 105,700 0,700" fill="#2f6f73"/>
+      <polygon points="420,0 300,0 345,700 420,700" fill="#b8492f"/>
+      <polygon points="420,0 420,250 245,0" fill="#ecdcae"/>
+      <polygon points="0,420 90,380 60,700 0,700" fill="#245a5e"/>
+      <circle cx="62" cy="88" r="34" fill="#f2c14e"/>
+      <path d="M40,110 Q62,60 90,80" fill="none" stroke-width="3"/>
+
+      <!-- 어깨와 셔츠 -->
+      <path d="M0,700 L0,600 L150,545 L210,600 L280,545 L420,600 L420,700 Z" fill="#3b4a6b"/>
+      <g stroke="#e8dcc0" stroke-width="6" fill="none">
+        <path d="M0,640 L210,652 L420,640"/>
+        <path d="M0,670 L210,684 L420,670"/>
+      </g>
+
+      <!-- 목 -->
+      <polygon points="168,440 160,570 268,570 262,470" fill="#c98a62"/>
+      <polygon points="168,455 262,482 264,520 166,492" fill="#8d5138"/>
+
+      <!-- 머리카락(뒤) -->
+      <polygon points="92,300 86,150 150,48 250,22 338,64 352,150 336,240 300,200 210,90 130,160 120,300" fill="#1e1a1d"/>
+
+      <!-- 얼굴 왼쪽: 정면 -->
+      <polygon points="130,150 210,100 210,470 165,455 138,390 122,300 118,210" fill="#f2d2a9"/>
+      <!-- 얼굴 오른쪽: 측면 -->
+      <polygon points="210,100 290,128 305,190 300,232 352,312 308,335 318,372 326,388 306,402 300,445 262,482 210,470" fill="#e0946c"/>
+
+      <!-- 색 면 -->
+      <polygon points="130,150 210,100 210,172 122,205" fill="#f8e3c0"/>
+      <polygon points="128,300 172,286 176,352 140,360" fill="#7fa37a"/>
+      <polygon points="122,300 165,290 175,400 138,390" fill="#c98d63" opacity="0.7"/>
+      <polygon points="210,300 262,292 300,232 210,235" fill="#f0b48a"/>
+
+      <!-- 왼쪽 귀 -->
+      <polygon points="120,236 98,226 92,292 124,304" fill="#e2ad83"/>
+      <path d="M108,246 L104,280" fill="none" stroke-width="2.5"/>
+
+      <!-- 코: 정면 삼각형 (측면 코는 오른쪽 윤곽에 있다) -->
+      <polygon points="210,190 190,335 212,346" fill="#e8b48a"/>
+      <polygon points="210,190 212,346 242,326" fill="#a8593d"/>
+      <path d="M190,335 Q200,352 226,348" fill="none" stroke-width="3"/>
+
+      <!-- 왼쪽 눈 (정면) -->
+      <path d="M130,230 Q165,200 200,228 Q165,254 130,230 Z" fill="#fffdf5"/>
+      <circle cx="165" cy="228" r="12" fill="#2b6f8f"/>
+      <circle cx="165" cy="228" r="5" fill="#1a1416" stroke="none"/>
+      <path d="M124,206 Q165,184 206,210" fill="none" stroke-width="5"/>
+
+      <!-- 오른쪽 눈 (측면 얼굴에 정면 눈) — 높이와 색이 다르다 -->
+      <g transform="rotate(-14 270 214)">
+        <path d="M238,226 Q270,192 304,212 Q272,244 238,226 Z" fill="#fffdf5"/>
+        <circle cx="272" cy="216" r="12" fill="#c9b12a"/>
+        <circle cx="272" cy="216" r="5" fill="#1a1416" stroke="none"/>
+      </g>
+      <path d="M236,190 L302,176" fill="none" stroke-width="5"/>
+
+      <!-- 어긋난 입 -->
+      <g transform="rotate(-7 215 405)">
+        <polygon points="168,394 214,378 266,398 214,402" fill="#a3283a"/>
+        <polygon points="176,400 214,404 262,404 234,434 190,426" fill="#c8404f"/>
+        <path d="M168,394 L266,398" fill="none" stroke-width="3"/>
+      </g>
+
+      <!-- 턱 선 -->
+      <path d="M165,455 L210,470" fill="none" stroke-width="3"/>
+      <path d="M210,100 L210,470" fill="none" stroke-width="3" opacity="0.6"/>
+
+      <!-- 앞머리 -->
+      <polygon points="118,212 128,148 210,98 292,126 306,190 282,132 210,90 140,140 134,218" fill="#1e1a1d"/>
+    </svg>
+
+    <h1>스탑워치</h1>
+    <div class="spacer"></div>
+
+    <div class="display" id="display" role="timer" aria-live="off">00:00<span class="ms">.00</span></div>
+
+    <div class="controls">
+      <button id="lap" disabled>랩</button>
+      <button id="toggle">시작</button>
+      <button id="reset" disabled>초기화</button>
+    </div>
+
+    <ol class="laps" id="laps" aria-label="랩 기록"></ol>
+
+    <p class="hint"><kbd>Space</kbd> 시작/정지 · <kbd>L</kbd> 랩 · <kbd>R</kbd> 초기화</p>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const display = $('display');
+    const toggleBtn = $('toggle');
+    const lapBtn = $('lap');
+    const resetBtn = $('reset');
+    const lapList = $('laps');
+
+    let elapsed = 0;        // 정지 시점까지 누적된 시간(ms)
+    let startedAt = 0;      // 마지막 시작 시각(performance.now)
+    let rafId = null;
+    let laps = [];          // { total, split }
+    let lastLapTotal = 0;
+
+    const pad = (n, w = 2) => String(n).padStart(w, '0');
+
+    function format(ms) {
+      const cs = Math.floor(ms / 10) % 100;
+      const s = Math.floor(ms / 1000) % 60;
+      const m = Math.floor(ms / 60000) % 60;
+      const h = Math.floor(ms / 3600000);
+      const main = h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+      return { main, cs: `.${pad(cs)}` };
+    }
+
+    function formatText(ms) {
+      const { main, cs } = format(ms);
+      return main + cs;
+    }
+
+    function now() {
+      return rafId !== null ? elapsed + (performance.now() - startedAt) : elapsed;
+    }
+
+    function render() {
+      const { main, cs } = format(now());
+      display.innerHTML = `${main}<span class="ms">${cs}</span>`;
+    }
+
+    function tick() {
+      render();
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function start() {
+      startedAt = performance.now();
+      rafId = requestAnimationFrame(tick);
+      toggleBtn.textContent = '정지';
+      toggleBtn.classList.add('running');
+      lapBtn.disabled = false;
+      resetBtn.disabled = true;
+    }
+
+    function stop() {
+      elapsed += performance.now() - startedAt;
+      cancelAnimationFrame(rafId);
+      rafId = null;
+      render();
+      toggleBtn.textContent = '계속';
+      toggleBtn.classList.remove('running');
+      lapBtn.disabled = true;
+      resetBtn.disabled = false;
+    }
+
+    function toggle() {
+      rafId === null ? start() : stop();
+    }
+
+    function lap() {
+      if (rafId === null) return;
+      const total = now();
+      laps.push({ total, split: total - lastLapTotal });
+      lastLapTotal = total;
+      renderLaps();
+    }
+
+    function renderLaps() {
+      let best = -1, worst = -1;
+      if (laps.length >= 2) {
+        let min = Infinity, max = -Infinity;
+        laps.forEach((l, i) => {
+          if (l.split < min) { min = l.split; best = i; }
+          if (l.split > max) { max = l.split; worst = i; }
+        });
+      }
+      lapList.innerHTML = '';
+      for (let i = laps.length - 1; i >= 0; i--) {
+        const li = document.createElement('li');
+        if (i === best) li.className = 'best';
+        else if (i === worst) li.className = 'worst';
+        const cells = [`랩 ${i + 1}`, formatText(laps[i].split), formatText(laps[i].total)];
+        cells.forEach((text) => {
+          const span = document.createElement('span');
+          span.textContent = text;
+          li.appendChild(span);
+        });
+        lapList.appendChild(li);
+      }
+    }
+
+    function reset() {
+      if (rafId !== null) return;
+      elapsed = 0;
+      laps = [];
+      lastLapTotal = 0;
+      lapList.innerHTML = '';
+      toggleBtn.textContent = '시작';
+      resetBtn.disabled = true;
+      render();
+    }
+
+    toggleBtn.addEventListener('click', toggle);
+    lapBtn.addEventListener('click', lap);
+    resetBtn.addEventListener('click', reset);
+
+    const isSpace = (e) => e.code === 'Space' || e.key === ' ';
+
+    // 버튼에 포커스가 있을 때 Space의 keyup 클릭이 중복으로 토글되는 것을 방지
+    document.addEventListener('keyup', (e) => {
+      if (isSpace(e)) e.preventDefault();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (isSpace(e)) {
+        e.preventDefault();
+        toggle();
+      } else if (e.key === 'l' || e.key === 'L') {
+        lap();
+      } else if (e.key === 'r' || e.key === 'R') {
+        reset();
+      }
+    });
+  </script>
+</body>
+</html>
