@@ -4,13 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PetVital — 수의사가 설계한 맞춤 영양</title>
-<meta name="description" content="PetVital은 수의사가 설계한 프리미엄 반려동물 맞춤 영양제 브랜드입니다.">
+<meta name="description" content="PetVital은 수의사가 설계한 프리미엄 반려동물 맞춤 영양제 브랜드입니다. 3가지 질문으로 우리 아이에게 맞는 포뮬러를 찾아보세요.">
+<meta name="theme-color" content="#C2410C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PetVital — 수의사가 설계한 맞춤 영양">
+<meta property="og:description" content="같은 강아지, 같은 고양이는 없으니까요. 우리 아이에게 꼭 맞는 포뮬러를 찾아보세요.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23C2410C'/%3E%3Cg fill='%23fff'%3E%3Cellipse cx='16' cy='21' rx='6' ry='5'/%3E%3Ccircle cx='9' cy='15' r='2.4'/%3E%3Ccircle cx='13.5' cy='10.5' r='2.4'/%3E%3Ccircle cx='18.5' cy='10.5' r='2.4'/%3E%3Ccircle cx='23' cy='15' r='2.4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root {
-    --orange: #D9480F;
-    --orange-deep: #B93A08;
-    --orange-dark: #7A2A08;
+    --orange: #C2410C;
+    --orange-deep: #9A3412;
+    --orange-dark: #6B2408;
     --orange-soft: #FFF1E8;
     --orange-line: #F6D9C6;
     --ink: #2B1A12;
@@ -21,7 +27,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
   body {
     margin: 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
@@ -36,6 +42,10 @@
   .wrap { width: min(var(--wrap), 100% - 48px); margin-inline: auto; }
 
   :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+  .hero :focus-visible, .cta-box :focus-visible { outline-color: var(--white); }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 30; background: var(--ink); color: var(--white); padding: 10px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  body:has(dialog[open]) { overflow: hidden; }
 
   /* ---------- Buttons ---------- */
   .btn {
@@ -70,7 +80,7 @@
   .hero {
     position: relative; overflow: hidden; color: var(--white);
     background:
-      radial-gradient(900px 500px at 85% 20%, #F2660F 0%, transparent 60%),
+      radial-gradient(900px 500px at 85% 20%, #D9531A 0%, transparent 60%),
       linear-gradient(135deg, var(--orange) 0%, var(--orange-deep) 100%);
   }
   .hero::after {
@@ -86,9 +96,9 @@
   .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
   .hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.9rem); line-height: 1.18; letter-spacing: -.035em; margin: 22px 0 20px; font-weight: 800; }
   .hero h1 em { font-style: normal; box-shadow: inset 0 -.32em 0 rgba(255,255,255,.22); }
-  .hero p.lead { font-size: 1.15rem; max-width: 34em; margin: 0 0 34px; color: rgba(255,255,255,.92); }
+  .hero p.lead { font-size: 1.15rem; max-width: 34em; margin: 0 0 34px; color: var(--white); }
   .hero .actions { display: flex; flex-wrap: wrap; gap: 14px; }
-  .proof { display: flex; flex-wrap: wrap; gap: 10px 28px; list-style: none; margin: 40px 0 0; padding: 0; font-size: .95rem; color: rgba(255,255,255,.9); }
+  .proof { display: flex; flex-wrap: wrap; gap: 10px 28px; list-style: none; margin: 40px 0 0; padding: 0; font-size: .95rem; color: var(--white); }
   .proof li { display: flex; align-items: center; gap: 8px; }
   .proof svg { width: 18px; height: 18px; flex: none; }
 
@@ -129,19 +139,23 @@
   .card .thumb::before { content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%; background: var(--white); bottom: 20px; left: 50%; transform: translateX(-50%); }
   .card .thumb svg { position: relative; width: 112px; margin-bottom: 26px; filter: drop-shadow(0 12px 10px rgba(90,30,0,.2)); }
   .card .body { padding: 26px 28px 30px; display: flex; flex-direction: column; flex: 1; }
-  .tag { align-self: flex-start; font-size: .8rem; font-weight: 700; color: var(--orange-deep); background: var(--orange-soft); padding: 4px 12px; border-radius: 999px; }
+  .tag { align-self: flex-start; font-size: .85rem; font-weight: 700; color: var(--orange-deep); background: var(--orange-soft); padding: 4px 12px; border-radius: 999px; }
   .card h3 { margin: 14px 0 4px; font-size: 1.35rem; letter-spacing: -.02em; }
   .card .sub { margin: 0 0 12px; color: var(--ink-soft); font-size: .9rem; font-weight: 500; }
   .card p.desc { margin: 0 0 18px; color: var(--ink-soft); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 24px; }
-  .chips li { font-size: .82rem; padding: 4px 10px; border: 1px solid var(--orange-line); border-radius: 8px; color: var(--ink-soft); }
-  .card .more { margin-top: auto; font-weight: 700; color: var(--orange); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .chips li { font-size: .875rem; padding: 4px 10px; border: 1px solid var(--orange-line); border-radius: 8px; color: var(--ink-soft); }
+  .card .more {
+    margin-top: auto; align-self: flex-start; padding: 10px 0; background: none; border: 0; cursor: pointer;
+    font: inherit; font-weight: 700; color: var(--orange); display: inline-flex; align-items: center; gap: 6px;
+    transition: gap .18s ease, color .18s ease;
+  }
   .card .more:hover { color: var(--orange-deep); gap: 10px; }
-  .card .more { transition: gap .18s ease, color .18s ease; }
 
   /* ---------- Reviews ---------- */
   .reviews { background: var(--orange-soft); }
   .review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .sample-note { margin-top: 24px; font-size: .875rem; color: var(--ink-soft); }
   .review { background: var(--white); border-radius: var(--radius); padding: 36px 36px 32px; position: relative; box-shadow: 0 10px 30px rgba(217,72,15,.08); }
   .review .quote-mark { position: absolute; top: 20px; right: 28px; width: 44px; height: 44px; color: var(--orange-line); }
   .stars { display: flex; gap: 3px; color: var(--orange); margin-bottom: 16px; }
@@ -157,7 +171,7 @@
   .cta-box {
     position: relative; overflow: hidden; text-align: center; color: var(--white);
     border-radius: 36px; padding: 80px 32px;
-    background: radial-gradient(600px 300px at 15% 0%, #F2660F, transparent 70%), linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 140%);
+    background: radial-gradient(600px 300px at 15% 0%, #D0501A, transparent 70%), linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 140%);
     box-shadow: 0 30px 60px rgba(217,72,15,.3);
   }
   .cta-box::before, .cta-box::after { content: ""; position: absolute; border-radius: 50%; border: 2px solid rgba(255,255,255,.18); }
@@ -165,8 +179,48 @@
   .cta-box::after { width: 260px; height: 260px; right: -70px; top: -110px; }
   .cta-box > * { position: relative; }
   .cta-box h2 { color: var(--white); margin-top: 0; }
-  .cta-box p { max-width: 32em; margin: 0 auto 34px; color: rgba(255,255,255,.92); font-size: 1.1rem; }
-  .cta-box small { display: block; margin-top: 18px; color: rgba(255,255,255,.75); }
+  .cta-box p { max-width: 32em; margin: 0 auto 34px; color: var(--white); font-size: 1.1rem; }
+  .cta-box small { display: block; margin-top: 18px; color: rgba(255,255,255,.9); font-size: .9rem; }
+
+  /* ---------- Recommendation dialog ---------- */
+  dialog.finder {
+    width: min(560px, 100% - 24px); max-height: calc(100dvh - 24px); padding: 0; border: 0; border-radius: 28px;
+    color: var(--ink); background: var(--white); box-shadow: 0 40px 80px rgba(60, 20, 0, .4); overflow: auto;
+  }
+  dialog.finder::backdrop { background: rgba(43, 26, 18, .6); backdrop-filter: blur(3px); }
+  .finder-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 22px 24px 0 28px; }
+  .finder-head h2 { margin: 0; font-size: 1.35rem; }
+  .finder-close { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--orange-soft); color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .finder-close:hover { background: var(--orange-line); }
+  .finder-close svg { width: 20px; height: 20px; }
+  .finder form, .finder .result { padding: 8px 28px 28px; }
+  .finder .lede { margin: 0 0 8px; color: var(--ink-soft); font-size: .95rem; }
+  .finder fieldset { border: 0; margin: 20px 0 0; padding: 0; min-width: 0; }
+  .finder legend { padding: 0; font-weight: 800; margin-bottom: 10px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts label { position: relative; }
+  .opts input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .opts span {
+    display: inline-flex; align-items: center; min-height: 46px; padding: 10px 18px; border-radius: 999px;
+    border: 2px solid var(--orange-line); background: var(--white); font-weight: 600; cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .opts label:hover span { border-color: var(--orange); }
+  .opts input:checked + span { background: var(--orange); border-color: var(--orange); color: var(--white); }
+  .opts input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .finder .err { min-height: 1.4em; margin: 16px 0 0; color: #B42318; font-weight: 600; font-size: .92rem; }
+  .finder .submit { width: 100%; margin-top: 6px; }
+  .result { text-align: center; }
+  .result .pick { display: grid; place-items: center; gap: 4px; padding: 20px 0 8px; }
+  .result .pick svg { width: 84px; filter: drop-shadow(0 10px 8px rgba(90,30,0,.2)); }
+  .result h3 { margin: 10px 0 2px; font-size: 1.5rem; letter-spacing: -.02em; }
+  .result .why { margin: 8px auto 14px; max-width: 26em; color: var(--ink-soft); }
+  .result .chips { justify-content: center; margin-bottom: 18px; }
+  .result .picked { font-size: .9rem; color: var(--ink-soft); margin: 0 0 18px; }
+  .result .caution { margin: 0 0 22px; padding: 14px 16px; border-radius: 14px; background: var(--orange-soft); font-size: .9rem; text-align: left; color: var(--ink); }
+  .result .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .btn-line { background: var(--white); color: var(--orange-deep); border-color: var(--orange-line); }
+  .btn-line:hover { border-color: var(--orange); }
 
   /* ---------- Footer ---------- */
   footer { border-top: 1px solid var(--orange-line); padding-block: 40px; color: var(--ink-soft); font-size: .9rem; }
@@ -175,9 +229,9 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
-    .hero .wrap { grid-template-columns: 1fr; padding-block: 56px 100px; text-align: left; }
-    .hero-visual { max-width: 360px; order: -1; }
-    .badge { right: 0; }
+    .hero .wrap { grid-template-columns: 1fr; padding-block: 48px 100px; text-align: left; }
+    .hero-visual { max-width: 340px; margin-top: 12px; }
+    .badge { right: auto; left: 50%; top: auto; bottom: 0; transform: translateX(-50%); white-space: nowrap; }
     .products, .review-grid { grid-template-columns: 1fr; }
     .card { flex-direction: row; }
     .card .thumb { width: 42%; height: auto; min-height: 260px; flex: none; }
@@ -191,6 +245,8 @@
     .review { padding: 28px 24px; }
     .cta-box { padding: 56px 22px; border-radius: 28px; }
     .hero .actions .btn { flex: 1 1 100%; }
+    .finder-head { padding: 18px 16px 0 22px; }
+    .finder form, .finder .result { padding: 8px 22px 24px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -214,6 +270,7 @@
     <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
     <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="quote" viewBox="0 0 48 48"><path fill="currentColor" d="M8 30c0-9 5-15 13-18l2 4c-5 2-7 5-7 8h6v14H8V30zm22 0c0-9 5-15 13-18l2 4c-5 2-7 5-7 8h6v14H30V30z"/></symbol>
+    <symbol id="close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
     <symbol id="cross" viewBox="0 0 32 32"><path fill="currentColor" d="M12 3h8v9h9v8h-9v9h-8v-9H3v-8h9z"/></symbol>
 
     <!-- Supplement bottle: colors set through --cap and --label on the <svg> -->
@@ -226,23 +283,23 @@
       <rect x="8" y="42" width="104" height="24" rx="0" fill="none"/>
       <g color="#fff" transform="translate(44 84)"><use href="#paw" width="32" height="32"/></g>
       <text x="60" y="140" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="14" font-weight="800" fill="#fff" letter-spacing="-.3">PetVital</text>
-      <text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="8.5" font-weight="600" fill="var(--label, #D9480F)" letter-spacing=".6">VET FORMULA</text>
       <path d="M22 56c-2 26-2 90 0 112" stroke="rgba(255,255,255,.7)" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/>
     </symbol>
   </defs>
 </svg>
 
+<a class="skip" href="#products">본문 바로가기</a>
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="PetVital 홈">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#D9480F"/><g color="#fff" transform="translate(6 6)"><use href="#paw" width="20" height="20"/></g></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#C2410C"/><g color="#fff" transform="translate(6 6)"><use href="#paw" width="20" height="20"/></g></svg>
       PetVital
     </a>
     <nav aria-label="주요 메뉴">
       <ul>
         <li><a href="#products">제품</a></li>
         <li><a href="#reviews">후기</a></li>
-        <li><a class="btn btn-orange btn-sm" href="#cta">맞춤 상담</a></li>
+        <li><button type="button" class="btn btn-orange btn-sm" data-finder>맞춤 추천</button></li>
       </ul>
     </nav>
   </div>
@@ -258,7 +315,7 @@
         <h1>수의사가 설계한<br><em>맞춤 영양</em></h1>
         <p class="lead">같은 강아지, 같은 고양이는 없으니까요. PetVital은 수의사가 아이의 나이·체중·생활 습관을 살펴 필요한 영양만 정확하게 설계합니다.</p>
         <div class="actions">
-          <a class="btn btn-white" href="#cta">우리 아이 맞춤 영양 받기 <svg width="20" height="20" aria-hidden="true"><use href="#arrow"/></svg></a>
+          <button type="button" class="btn btn-white" data-finder>1분 맞춤 추천 받기 <svg width="20" height="20" aria-hidden="true"><use href="#arrow"/></svg></button>
           <a class="btn btn-ghost" href="#products">제품 살펴보기</a>
         </div>
         <ul class="proof">
@@ -272,12 +329,12 @@
         <div class="ring"></div>
         <div class="disc"></div>
         <div class="bottles">
-          <svg viewBox="0 0 120 200" style="--label:#D9480F;--cap:#7A2A08"><use href="#bottle"/></svg>
-          <svg viewBox="0 0 120 200" style="--label:#B93A08;--cap:#2B1A12"><use href="#bottle"/></svg>
-          <svg viewBox="0 0 120 200" style="--label:#EE7A2B;--cap:#B93A08"><use href="#bottle"/></svg>
+          <svg viewBox="0 0 120 200" style="--label:#C2410C;--cap:#6B2408"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="9" font-weight="700" fill="#C2410C" letter-spacing=".6">JOINT</text></svg>
+          <svg viewBox="0 0 120 200" style="--label:#9A3412;--cap:#2B1A12"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="9" font-weight="700" fill="#9A3412" letter-spacing=".6">SKIN &amp; COAT</text></svg>
+          <svg viewBox="0 0 120 200" style="--label:#E8782C;--cap:#9A3412"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="9" font-weight="700" fill="#B45309" letter-spacing=".6">GUT</text></svg>
         </div>
         <div class="badge">
-          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#D9480F"/><g color="#fff" transform="translate(7 7)"><use href="#cross" width="18" height="18"/></g></svg>
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#C2410C"/><g color="#fff" transform="translate(7 7)"><use href="#cross" width="18" height="18"/></g></svg>
           <div><strong>Vet Designed</strong>수의사 설계 포뮬러</div>
         </div>
       </div>
@@ -295,38 +352,38 @@
 
       <div class="products">
         <article class="card">
-          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#D9480F;--cap:#7A2A08" role="img" aria-label="모빌리티 조인트 제품 이미지"><use href="#bottle"/></svg></div>
+          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#C2410C;--cap:#6B2408" role="img" aria-label="모빌리티 조인트 제품 이미지"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="9" font-weight="700" fill="#C2410C" letter-spacing=".6">JOINT</text></svg></div>
           <div class="body">
             <span class="tag">관절 · 활력</span>
             <h3>모빌리티 조인트</h3>
             <p class="sub">Mobility Joint</p>
             <p class="desc">산책이 즐거운 아이로. 관절과 연골의 컨디션을 꾸준히 챙기는 데일리 포뮬러입니다.</p>
             <ul class="chips"><li>글루코사민</li><li>콘드로이틴</li><li>MSM</li></ul>
-            <a class="more" href="#cta">자세히 보기 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+            <button type="button" class="more" data-finder data-concern="joint">우리 아이에게 맞는지 확인 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></button>
           </div>
         </article>
 
         <article class="card">
-          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#B93A08;--cap:#2B1A12" role="img" aria-label="글로우 스킨앤코트 제품 이미지"><use href="#bottle"/></svg></div>
+          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#9A3412;--cap:#2B1A12" role="img" aria-label="글로우 스킨앤코트 제품 이미지"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="9" font-weight="700" fill="#9A3412" letter-spacing=".6">SKIN &amp; COAT</text></svg></div>
           <div class="body">
             <span class="tag">피부 · 모질</span>
             <h3>글로우 스킨&amp;코트</h3>
             <p class="sub">Glow Skin &amp; Coat</p>
             <p class="desc">윤기 있는 털, 편안한 피부. 필수 지방산과 비타민으로 안에서부터 채워 줍니다.</p>
             <ul class="chips"><li>오메가-3</li><li>비오틴</li><li>비타민 E</li></ul>
-            <a class="more" href="#cta">자세히 보기 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+            <button type="button" class="more" data-finder data-concern="skin">우리 아이에게 맞는지 확인 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></button>
           </div>
         </article>
 
         <article class="card">
-          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#EE7A2B;--cap:#B93A08" role="img" aria-label="가트 밸런스 프로바이오틱스 제품 이미지"><use href="#bottle"/></svg></div>
+          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#E8782C;--cap:#9A3412" role="img" aria-label="가트 밸런스 프로바이오틱스 제품 이미지"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="9" font-weight="700" fill="#B45309" letter-spacing=".6">GUT</text></svg></div>
           <div class="body">
             <span class="tag">장 · 면역</span>
             <h3>가트 밸런스 프로바이오틱스</h3>
             <p class="sub">Gut Balance Probiotics</p>
             <p class="desc">편안한 배, 튼튼한 하루. 유익균과 프리바이오틱스로 장 환경의 균형을 돕습니다.</p>
             <ul class="chips"><li>유산균</li><li>프리바이오틱스</li><li>식이섬유</li></ul>
-            <a class="more" href="#cta">자세히 보기 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+            <button type="button" class="more" data-finder data-concern="gut">우리 아이에게 맞는지 확인 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></button>
           </div>
         </article>
       </div>
@@ -334,12 +391,12 @@
   </section>
 
   <!-- REVIEWS -->
-  <!-- 아래 후기는 샘플 문구입니다. 실제 공개 전 고객 동의를 받은 실제 후기로 교체하세요. -->
-  <section id="reviews" class="reviews">
+  <!-- 아래 후기는 샘플 문구입니다. 실제 공개 전 고객 동의를 받은 실제 후기로 교체하고, .sample-note 문구도 함께 삭제하세요. -->
+  <section id="reviews" class="reviews" aria-labelledby="reviews-title">
     <div class="wrap">
       <div class="section-head">
         <span class="kicker">Reviews</span>
-        <h2>보호자님들의 이야기</h2>
+        <h2 id="reviews-title">보호자님들의 이야기</h2>
         <p>PetVital과 함께하는 아이들의 일상을 들려주셨어요.</p>
       </div>
 
@@ -368,6 +425,7 @@
           </figcaption>
         </figure>
       </div>
+      <p class="sample-note">※ 시안용 예시 후기입니다. 개인별 체감과 결과는 다를 수 있으며, 질병의 치료·예방 효과를 의미하지 않습니다.</p>
     </div>
   </section>
 
@@ -375,10 +433,10 @@
   <div class="cta" id="cta">
     <div class="wrap">
       <div class="cta-box">
-        <h2>우리 아이를 위한 영양,<br>수의사와 함께 설계해 보세요</h2>
-        <p>몇 가지 질문에 답하면 아이의 나이·체중·건강 고민에 맞는 PetVital 포뮬러를 추천해 드려요.</p>
-        <a class="btn btn-white" href="#">무료 맞춤 상담 시작하기 <svg width="20" height="20" aria-hidden="true"><use href="#arrow"/></svg></a>
-        <small>상담은 무료이며, 구매 의무는 없습니다.</small>
+        <h2>우리 아이에게 꼭 맞는 영양,<br>세 가지 질문으로 찾아보세요</h2>
+        <p>종, 챙기고 싶은 고민, 나이대만 알려 주세요. 세 가지 포뮬러 중 가장 잘 맞는 제품을 안내해 드려요.</p>
+        <button type="button" class="btn btn-white" data-finder>1분 맞춤 추천 받기 <svg width="20" height="20" aria-hidden="true"><use href="#arrow"/></svg></button>
+        <small>무료이며, 입력하신 내용은 저장하거나 전송하지 않습니다.</small>
       </div>
     </div>
   </div>
@@ -390,9 +448,128 @@
       <strong style="color:var(--orange-deep)">PetVital</strong> · 수의사가 설계한 맞춤 영양<br>
       본 제품은 반려동물용 영양 보충제이며 질병의 진단·치료·예방을 위한 의약품이 아닙니다.
     </div>
+    <!-- 공개 전 필수: 전자상거래법상 상호·대표자·사업자등록번호·통신판매업 신고번호·주소·고객센터 정보를 이 자리에 추가하세요. -->
     <div>© 2026 PetVital. All rights reserved.</div>
   </div>
 </footer>
+
+<!-- 맞춤 추천: 브라우저 안에서만 계산하며 어떤 입력값도 저장·전송하지 않습니다. -->
+<dialog class="finder" id="finder" aria-labelledby="finder-title">
+  <div class="finder-head">
+    <h2 id="finder-title">우리 아이 맞춤 추천</h2>
+    <button type="button" class="finder-close" aria-label="닫기" data-close><svg aria-hidden="true"><use href="#close"/></svg></button>
+  </div>
+
+  <form id="finder-form" novalidate>
+    <p class="lede">세 가지만 골라 주세요. 30초면 충분해요.</p>
+    <fieldset>
+      <legend>누구와 함께하나요?</legend>
+      <div class="opts">
+        <label><input type="radio" name="species" value="강아지"><span>강아지</span></label>
+        <label><input type="radio" name="species" value="고양이"><span>고양이</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>가장 챙기고 싶은 부분은요?</legend>
+      <div class="opts">
+        <label><input type="radio" name="concern" value="joint"><span>관절 · 활력</span></label>
+        <label><input type="radio" name="concern" value="skin"><span>피부 · 모질</span></label>
+        <label><input type="radio" name="concern" value="gut"><span>장 · 면역</span></label>
+        <label><input type="radio" name="concern" value="any"><span>아직 잘 모르겠어요</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>아이의 나이대는요?</legend>
+      <div class="opts">
+        <label><input type="radio" name="age" value="young"><span>1살 미만</span></label>
+        <label><input type="radio" name="age" value="adult"><span>1~6살</span></label>
+        <label><input type="radio" name="age" value="senior"><span>7살 이상</span></label>
+      </div>
+    </fieldset>
+    <p class="err" id="finder-err" role="alert"></p>
+    <button type="submit" class="btn btn-orange submit">추천 결과 보기</button>
+  </form>
+
+  <div class="result" id="finder-result" hidden aria-live="polite"></div>
+</dialog>
+
+<script>
+(() => {
+  const PRODUCTS = {
+    joint: {
+      name: '모빌리티 조인트', en: 'Mobility Joint', label: '#C2410C', cap: '#6B2408', text: '#C2410C', tag: 'JOINT',
+      why: '관절과 연골의 컨디션을 꾸준히 챙기고 싶은 아이에게 잘 맞는 데일리 포뮬러예요.',
+      chips: ['글루코사민', '콘드로이틴', 'MSM']
+    },
+    skin: {
+      name: '글로우 스킨&코트', en: 'Glow Skin & Coat', label: '#9A3412', cap: '#2B1A12', text: '#9A3412', tag: 'SKIN &amp; COAT',
+      why: '필수 지방산과 비타민으로 피부와 털 컨디션을 안에서부터 채워 주는 포뮬러예요.',
+      chips: ['오메가-3', '비오틴', '비타민 E']
+    },
+    gut: {
+      name: '가트 밸런스 프로바이오틱스', en: 'Gut Balance Probiotics', label: '#E8782C', cap: '#9A3412', text: '#B45309', tag: 'GUT',
+      why: '유익균과 프리바이오틱스로 장 환경의 균형을 돕는 포뮬러예요.',
+      chips: ['유산균', '프리바이오틱스', '식이섬유']
+    }
+  };
+  const CONCERN = { joint: '관절 · 활력', skin: '피부 · 모질', gut: '장 · 면역', any: '전반적인 케어' };
+  const AGE = { young: '1살 미만', adult: '1~6살', senior: '7살 이상' };
+  // 고민을 모르겠다면 나이대로 가장 흔한 관리 포인트를 제안한다.
+  const BY_AGE = { young: 'gut', adult: 'skin', senior: 'joint' };
+
+  const dlg = document.getElementById('finder');
+  const form = document.getElementById('finder-form');
+  const result = document.getElementById('finder-result');
+  const err = document.getElementById('finder-err');
+  const title = document.getElementById('finder-title');
+
+  function reset(concern) {
+    form.reset();
+    err.textContent = '';
+    if (concern) form.querySelector(`[name=concern][value=${concern}]`).checked = true;
+    form.hidden = false; result.hidden = true; result.innerHTML = '';
+    title.textContent = '우리 아이 맞춤 추천';
+  }
+
+  document.querySelectorAll('[data-finder]').forEach(btn =>
+    btn.addEventListener('click', () => { reset(btn.dataset.concern); dlg.showModal(); }));
+  dlg.querySelector('[data-close]').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const missing = [['species', '종'], ['concern', '고민'], ['age', '나이대']].filter(([k]) => !d.get(k));
+    if (missing.length) {
+      err.textContent = `아직 고르지 않은 항목이 있어요: ${missing.map(m => m[1]).join(', ')}`;
+      form.querySelector(`[name=${missing[0][0]}]`).focus();
+      return;
+    }
+    const key = d.get('concern') === 'any' ? BY_AGE[d.get('age')] : d.get('concern');
+    const p = PRODUCTS[key];
+    const font = 'Pretendard Variable, Pretendard, sans-serif';
+    title.textContent = '추천 결과';
+    result.innerHTML = `
+      <div class="pick">
+        <svg viewBox="0 0 120 200" aria-hidden="true" style="--label:${p.label};--cap:${p.cap}"><use href="#bottle"/><text x="60" y="180" text-anchor="middle" font-family="${font}" font-size="9" font-weight="700" fill="${p.text}" letter-spacing=".6">${p.tag}</text></svg>
+        <h3>${p.name}</h3>
+        <span class="sub" style="color:var(--ink-soft)">${p.en}</span>
+      </div>
+      <p class="picked">${d.get('species')} · ${CONCERN[d.get('concern')]} · ${AGE[d.get('age')]}</p>
+      <p class="why">${p.why}</p>
+      <ul class="chips">${p.chips.map(c => `<li>${c}</li>`).join('')}</ul>
+      <p class="caution">참고용 추천이에요. 이미 치료 중이거나 복용하는 약이 있다면, 급여 전에 수의사와 먼저 상담해 주세요.</p>
+      <div class="row">
+        <button type="button" class="btn btn-line" data-again>다시 해보기</button>
+        <button type="button" class="btn btn-orange" data-done>닫기</button>
+      </div>`;
+    form.hidden = true; result.hidden = false;
+    result.querySelector('[data-done]').focus();
+    result.querySelector('[data-again]').addEventListener('click', () => { reset(); form.querySelector('input').focus(); });
+    result.querySelector('[data-done]').addEventListener('click', () => dlg.close());
+  });
+})();
+</script>
 
 </body>
 </html>
