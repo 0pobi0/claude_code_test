@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PetVital — 수의사가 설계한 맞춤 영양</title>
+<meta name="description" content="PetVital은 수의사가 설계한 프리미엄 반려동물 맞춤 영양제 브랜드입니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --orange: #D9480F;
+    --orange-deep: #B93A08;
+    --orange-dark: #7A2A08;
+    --orange-soft: #FFF1E8;
+    --orange-line: #F6D9C6;
+    --ink: #2B1A12;
+    --ink-soft: #6B554A;
+    --white: #FFFFFF;
+    --radius: 24px;
+    --wrap: 1120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { width: min(var(--wrap), 100% - 48px); margin-inline: auto; }
+
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 16px 28px; border-radius: 999px;
+    font: inherit; font-weight: 700; font-size: 1rem; text-decoration: none;
+    border: 2px solid transparent; cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-white { background: var(--white); color: var(--orange-deep); box-shadow: 0 10px 24px rgba(90, 30, 0, .25); }
+  .btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.7); }
+  .btn-ghost:hover { background: rgba(255,255,255,.12); }
+  .btn-orange { background: var(--orange); color: var(--white); box-shadow: 0 10px 24px rgba(217, 72, 15, .28); }
+  .btn-orange:hover { background: var(--orange-deep); }
+  .btn-sm { padding: 10px 20px; font-size: .92rem; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--orange-line);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; letter-spacing: -.02em; text-decoration: none; color: var(--orange-deep); }
+  .logo svg { width: 30px; height: 30px; }
+  .nav ul { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a:not(.btn) { text-decoration: none; font-weight: 600; color: var(--ink-soft); }
+  .nav ul a:not(.btn):hover { color: var(--orange); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; color: var(--white);
+    background:
+      radial-gradient(900px 500px at 85% 20%, #F2660F 0%, transparent 60%),
+      linear-gradient(135deg, var(--orange) 0%, var(--orange-deep) 100%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: auto 0 -1px 0; height: 60px; background: var(--white);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; padding-block: 88px 120px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.16);
+    font-size: .88rem; font-weight: 600; letter-spacing: .01em;
+  }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+  .hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.9rem); line-height: 1.18; letter-spacing: -.035em; margin: 22px 0 20px; font-weight: 800; }
+  .hero h1 em { font-style: normal; box-shadow: inset 0 -.32em 0 rgba(255,255,255,.22); }
+  .hero p.lead { font-size: 1.15rem; max-width: 34em; margin: 0 0 34px; color: rgba(255,255,255,.92); }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .proof { display: flex; flex-wrap: wrap; gap: 10px 28px; list-style: none; margin: 40px 0 0; padding: 0; font-size: .95rem; color: rgba(255,255,255,.9); }
+  .proof li { display: flex; align-items: center; gap: 8px; }
+  .proof svg { width: 18px; height: 18px; flex: none; }
+
+  .hero-visual { position: relative; aspect-ratio: 1; max-width: 480px; margin-inline: auto; width: 100%; }
+  .hero-visual .disc { position: absolute; inset: 6%; border-radius: 50%; background: var(--white); box-shadow: 0 30px 60px rgba(70, 20, 0, .3); }
+  .hero-visual .ring { position: absolute; inset: -2%; border-radius: 50%; border: 2px dashed rgba(255,255,255,.4); animation: spin 40s linear infinite; }
+  .hero-visual .bottles { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; gap: 2%; padding-bottom: 20%; }
+  .hero-visual .bottles svg { width: 27%; height: auto; filter: drop-shadow(0 14px 12px rgba(90,30,0,.22)); animation: bob 5s ease-in-out infinite; }
+  .hero-visual .bottles svg:nth-child(2) { width: 32%; margin-bottom: 9%; animation-delay: -1.6s; }
+  .hero-visual .bottles svg:nth-child(3) { animation-delay: -3.2s; }
+  .badge {
+    position: absolute; right: -2%; top: 10%; display: flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--white); padding: 12px 16px; border-radius: 16px;
+    font-size: .85rem; line-height: 1.35; box-shadow: 0 14px 30px rgba(0,0,0,.25);
+  }
+  .badge strong { display: block; font-size: .95rem; }
+  .badge svg { width: 30px; height: 30px; flex: none; }
+
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: 96px; }
+  .section-head { max-width: 640px; margin-bottom: 52px; }
+  .kicker { color: var(--orange); font-weight: 700; font-size: .92rem; letter-spacing: .06em; text-transform: uppercase; }
+  h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1.25; letter-spacing: -.03em; margin: 10px 0 14px; font-weight: 800; }
+  .section-head p { margin: 0; color: var(--ink-soft); font-size: 1.08rem; }
+
+  /* ---------- Products ---------- */
+  .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    display: flex; flex-direction: column; background: var(--white);
+    border: 1px solid var(--orange-line); border-radius: var(--radius); overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 24px 40px rgba(217,72,15,.14); border-color: var(--orange); }
+  .card .thumb { background: var(--orange-soft); padding: 32px 0 0; display: grid; place-items: end center; height: 260px; position: relative; }
+  .card .thumb::before { content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%; background: var(--white); bottom: 20px; left: 50%; transform: translateX(-50%); }
+  .card .thumb svg { position: relative; width: 112px; margin-bottom: 26px; filter: drop-shadow(0 12px 10px rgba(90,30,0,.2)); }
+  .card .body { padding: 26px 28px 30px; display: flex; flex-direction: column; flex: 1; }
+  .tag { align-self: flex-start; font-size: .8rem; font-weight: 700; color: var(--orange-deep); background: var(--orange-soft); padding: 4px 12px; border-radius: 999px; }
+  .card h3 { margin: 14px 0 4px; font-size: 1.35rem; letter-spacing: -.02em; }
+  .card .sub { margin: 0 0 12px; color: var(--ink-soft); font-size: .9rem; font-weight: 500; }
+  .card p.desc { margin: 0 0 18px; color: var(--ink-soft); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 24px; }
+  .chips li { font-size: .82rem; padding: 4px 10px; border: 1px solid var(--orange-line); border-radius: 8px; color: var(--ink-soft); }
+  .card .more { margin-top: auto; font-weight: 700; color: var(--orange); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .card .more:hover { color: var(--orange-deep); gap: 10px; }
+  .card .more { transition: gap .18s ease, color .18s ease; }
+
+  /* ---------- Reviews ---------- */
+  .reviews { background: var(--orange-soft); }
+  .review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .review { background: var(--white); border-radius: var(--radius); padding: 36px 36px 32px; position: relative; box-shadow: 0 10px 30px rgba(217,72,15,.08); }
+  .review .quote-mark { position: absolute; top: 20px; right: 28px; width: 44px; height: 44px; color: var(--orange-line); }
+  .stars { display: flex; gap: 3px; color: var(--orange); margin-bottom: 16px; }
+  .stars svg { width: 20px; height: 20px; }
+  .review blockquote { margin: 0 0 26px; font-size: 1.12rem; line-height: 1.75; letter-spacing: -.01em; }
+  .who { display: flex; align-items: center; gap: 14px; }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--orange); color: var(--white); display: grid; place-items: center; font-weight: 800; }
+  .who b { display: block; }
+  .who span { color: var(--ink-soft); font-size: .9rem; }
+
+  /* ---------- CTA ---------- */
+  .cta { padding-block: 0 96px; background: linear-gradient(var(--orange-soft) 50%, var(--white) 50%); }
+  .cta-box {
+    position: relative; overflow: hidden; text-align: center; color: var(--white);
+    border-radius: 36px; padding: 80px 32px;
+    background: radial-gradient(600px 300px at 15% 0%, #F2660F, transparent 70%), linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 140%);
+    box-shadow: 0 30px 60px rgba(217,72,15,.3);
+  }
+  .cta-box::before, .cta-box::after { content: ""; position: absolute; border-radius: 50%; border: 2px solid rgba(255,255,255,.18); }
+  .cta-box::before { width: 360px; height: 360px; left: -120px; bottom: -180px; }
+  .cta-box::after { width: 260px; height: 260px; right: -70px; top: -110px; }
+  .cta-box > * { position: relative; }
+  .cta-box h2 { color: var(--white); margin-top: 0; }
+  .cta-box p { max-width: 32em; margin: 0 auto 34px; color: rgba(255,255,255,.92); font-size: 1.1rem; }
+  .cta-box small { display: block; margin-top: 18px; color: rgba(255,255,255,.75); }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--orange-line); padding-block: 40px; color: var(--ink-soft); font-size: .9rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+  footer .note { max-width: 44em; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-block: 56px 100px; text-align: left; }
+    .hero-visual { max-width: 360px; order: -1; }
+    .badge { right: 0; }
+    .products, .review-grid { grid-template-columns: 1fr; }
+    .card { flex-direction: row; }
+    .card .thumb { width: 42%; height: auto; min-height: 260px; flex: none; }
+    section { padding-block: 72px; }
+  }
+  @media (max-width: 620px) {
+    .wrap { width: min(var(--wrap), 100% - 32px); }
+    .nav ul li:not(:last-child) { display: none; }
+    .card { flex-direction: column; }
+    .card .thumb { width: 100%; height: 240px; min-height: 0; }
+    .review { padding: 28px 24px; }
+    .cta-box { padding: 56px 22px; border-radius: 28px; }
+    .hero .actions .btn { flex: 1 1 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Shared SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="paw" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="21" rx="7" ry="6" fill="currentColor"/>
+      <ellipse cx="6.5" cy="14" rx="2.7" ry="3.5" fill="currentColor" transform="rotate(-18 6.5 14)"/>
+      <ellipse cx="12.5" cy="8.5" rx="2.7" ry="3.6" fill="currentColor" transform="rotate(-6 12.5 8.5)"/>
+      <ellipse cx="19.5" cy="8.5" rx="2.7" ry="3.6" fill="currentColor" transform="rotate(6 19.5 8.5)"/>
+      <ellipse cx="25.5" cy="14" rx="2.7" ry="3.5" fill="currentColor" transform="rotate(18 25.5 14)"/>
+    </symbol>
+    <symbol id="star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="quote" viewBox="0 0 48 48"><path fill="currentColor" d="M8 30c0-9 5-15 13-18l2 4c-5 2-7 5-7 8h6v14H8V30zm22 0c0-9 5-15 13-18l2 4c-5 2-7 5-7 8h6v14H30V30z"/></symbol>
+    <symbol id="cross" viewBox="0 0 32 32"><path fill="currentColor" d="M12 3h8v9h9v8h-9v9h-8v-9H3v-8h9z"/></symbol>
+
+    <!-- Supplement bottle: colors set through --cap and --label on the <svg> -->
+    <symbol id="bottle" viewBox="0 0 120 200">
+      <rect x="32" y="2" width="56" height="32" rx="7" fill="var(--cap, #7A2A08)"/>
+      <path d="M36 8v22M44 8v22M52 8v22M60 8v22M68 8v22M76 8v22M84 8v22" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+      <rect x="40" y="34" width="40" height="12" fill="#F1E2D6"/>
+      <rect x="8" y="42" width="104" height="154" rx="20" fill="#fff" stroke="#F0D9C9" stroke-width="2"/>
+      <rect x="8" y="78" width="104" height="82" fill="var(--label, #D9480F)"/>
+      <rect x="8" y="42" width="104" height="24" rx="0" fill="none"/>
+      <g color="#fff" transform="translate(44 84)"><use href="#paw" width="32" height="32"/></g>
+      <text x="60" y="140" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="14" font-weight="800" fill="#fff" letter-spacing="-.3">PetVital</text>
+      <text x="60" y="180" text-anchor="middle" font-family="Pretendard Variable, Pretendard, sans-serif" font-size="8.5" font-weight="600" fill="var(--label, #D9480F)" letter-spacing=".6">VET FORMULA</text>
+      <path d="M22 56c-2 26-2 90 0 112" stroke="rgba(255,255,255,.7)" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="PetVital 홈">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#D9480F"/><g color="#fff" transform="translate(6 6)"><use href="#paw" width="20" height="20"/></g></svg>
+      PetVital
+    </a>
+    <nav aria-label="주요 메뉴">
+      <ul>
+        <li><a href="#products">제품</a></li>
+        <li><a href="#reviews">후기</a></li>
+        <li><a class="btn btn-orange btn-sm" href="#cta">맞춤 상담</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">프리미엄 반려동물 영양제</span>
+        <h1>수의사가 설계한<br><em>맞춤 영양</em></h1>
+        <p class="lead">같은 강아지, 같은 고양이는 없으니까요. PetVital은 수의사가 아이의 나이·체중·생활 습관을 살펴 필요한 영양만 정확하게 설계합니다.</p>
+        <div class="actions">
+          <a class="btn btn-white" href="#cta">우리 아이 맞춤 영양 받기 <svg width="20" height="20" aria-hidden="true"><use href="#arrow"/></svg></a>
+          <a class="btn btn-ghost" href="#products">제품 살펴보기</a>
+        </div>
+        <ul class="proof">
+          <li><svg aria-hidden="true"><use href="#check"/></svg>수의사 직접 설계</li>
+          <li><svg aria-hidden="true"><use href="#check"/></svg>전 성분 투명 공개</li>
+          <li><svg aria-hidden="true"><use href="#check"/></svg>불필요한 첨가물 최소화</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="disc"></div>
+        <div class="bottles">
+          <svg viewBox="0 0 120 200" style="--label:#D9480F;--cap:#7A2A08"><use href="#bottle"/></svg>
+          <svg viewBox="0 0 120 200" style="--label:#B93A08;--cap:#2B1A12"><use href="#bottle"/></svg>
+          <svg viewBox="0 0 120 200" style="--label:#EE7A2B;--cap:#B93A08"><use href="#bottle"/></svg>
+        </div>
+        <div class="badge">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#D9480F"/><g color="#fff" transform="translate(7 7)"><use href="#cross" width="18" height="18"/></g></svg>
+          <div><strong>Vet Designed</strong>수의사 설계 포뮬러</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Our Products</span>
+        <h2>우리 아이에게 꼭 맞는 세 가지 포뮬러</h2>
+        <p>고민에 따라 고르세요. 모든 제품은 수의사의 검토를 거쳐 연령과 체중별 급여량까지 함께 안내해 드립니다.</p>
+      </div>
+
+      <div class="products">
+        <article class="card">
+          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#D9480F;--cap:#7A2A08" role="img" aria-label="모빌리티 조인트 제품 이미지"><use href="#bottle"/></svg></div>
+          <div class="body">
+            <span class="tag">관절 · 활력</span>
+            <h3>모빌리티 조인트</h3>
+            <p class="sub">Mobility Joint</p>
+            <p class="desc">산책이 즐거운 아이로. 관절과 연골의 컨디션을 꾸준히 챙기는 데일리 포뮬러입니다.</p>
+            <ul class="chips"><li>글루코사민</li><li>콘드로이틴</li><li>MSM</li></ul>
+            <a class="more" href="#cta">자세히 보기 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#B93A08;--cap:#2B1A12" role="img" aria-label="글로우 스킨앤코트 제품 이미지"><use href="#bottle"/></svg></div>
+          <div class="body">
+            <span class="tag">피부 · 모질</span>
+            <h3>글로우 스킨&amp;코트</h3>
+            <p class="sub">Glow Skin &amp; Coat</p>
+            <p class="desc">윤기 있는 털, 편안한 피부. 필수 지방산과 비타민으로 안에서부터 채워 줍니다.</p>
+            <ul class="chips"><li>오메가-3</li><li>비오틴</li><li>비타민 E</li></ul>
+            <a class="more" href="#cta">자세히 보기 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb"><svg viewBox="0 0 120 200" style="--label:#EE7A2B;--cap:#B93A08" role="img" aria-label="가트 밸런스 프로바이오틱스 제품 이미지"><use href="#bottle"/></svg></div>
+          <div class="body">
+            <span class="tag">장 · 면역</span>
+            <h3>가트 밸런스 프로바이오틱스</h3>
+            <p class="sub">Gut Balance Probiotics</p>
+            <p class="desc">편안한 배, 튼튼한 하루. 유익균과 프리바이오틱스로 장 환경의 균형을 돕습니다.</p>
+            <ul class="chips"><li>유산균</li><li>프리바이오틱스</li><li>식이섬유</li></ul>
+            <a class="more" href="#cta">자세히 보기 <svg width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <!-- 아래 후기는 샘플 문구입니다. 실제 공개 전 고객 동의를 받은 실제 후기로 교체하세요. -->
+  <section id="reviews" class="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Reviews</span>
+        <h2>보호자님들의 이야기</h2>
+        <p>PetVital과 함께하는 아이들의 일상을 들려주셨어요.</p>
+      </div>
+
+      <div class="review-grid">
+        <figure class="review" style="margin:0">
+          <svg class="quote-mark" aria-hidden="true"><use href="#quote"/></svg>
+          <div class="stars" role="img" aria-label="별점 5점 만점에 5점">
+            <svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg>
+          </div>
+          <blockquote>수의사 선생님이 우리 보리의 나이와 체중을 보고 직접 추천해 주셔서 믿음이 갔어요. 요즘은 계단도 먼저 뛰어 올라가려고 해서 얼마나 기쁜지 몰라요.</blockquote>
+          <figcaption class="who">
+            <div class="avatar" aria-hidden="true">김</div>
+            <div><b>김○○ 보호자님</b><span>말티즈 '보리' · 7살</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="review" style="margin:0">
+          <svg class="quote-mark" aria-hidden="true"><use href="#quote"/></svg>
+          <div class="stars" role="img" aria-label="별점 5점 만점에 5점">
+            <svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg><svg aria-hidden="true"><use href="#star"/></svg>
+          </div>
+          <blockquote>성분표가 전부 공개되어 있고 왜 이 성분이 들어갔는지 설명해 주는 점이 좋았어요. 고양이 '모모'도 거부감 없이 잘 먹고, 털 결이 확실히 부드러워졌어요.</blockquote>
+          <figcaption class="who">
+            <div class="avatar" aria-hidden="true">이</div>
+            <div><b>이○○ 보호자님</b><span>코리안 숏헤어 '모모' · 4살</span></div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta" id="cta">
+    <div class="wrap">
+      <div class="cta-box">
+        <h2>우리 아이를 위한 영양,<br>수의사와 함께 설계해 보세요</h2>
+        <p>몇 가지 질문에 답하면 아이의 나이·체중·건강 고민에 맞는 PetVital 포뮬러를 추천해 드려요.</p>
+        <a class="btn btn-white" href="#">무료 맞춤 상담 시작하기 <svg width="20" height="20" aria-hidden="true"><use href="#arrow"/></svg></a>
+        <small>상담은 무료이며, 구매 의무는 없습니다.</small>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="note">
+      <strong style="color:var(--orange-deep)">PetVital</strong> · 수의사가 설계한 맞춤 영양<br>
+      본 제품은 반려동물용 영양 보충제이며 질병의 진단·치료·예방을 위한 의약품이 아닙니다.
+    </div>
+    <div>© 2026 PetVital. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
